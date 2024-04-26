@@ -18,24 +18,24 @@ export default function RootLayout({ children }) {
       <div className="w-64 h-full bg-blue-950 text-white">
         <div className="p-5">Invoice Manager</div>
         <ul className="mt-12">
+          <Link href="/">
           <li className="p-4 hover:bg-blue-700 cursor-pointer">
-            <Link href="/">
               Dashboard
-            </Link></li>
+            </li></Link>
+          <Link href="/CreateInvoice">
           <li className="p-4 hover:bg-blue-700 cursor-pointer">
-            <Link href="/CreateInvoice">
               Create Invoice
-            </Link></li>
-          <li className="p-4 hover:bg-blue-700 cursor-pointer">
-            <Link href="/ViewInvoices">
+            </li></Link>
+          <Link href="/ViewInvoices">
+            <li className="p-4 hover:bg-blue-700 cursor-pointer">
               View Invoices
-            </Link>
-          </li>
-          <li className="p-4 hover:bg-blue-700 cursor-pointer">
-            <Link href="/Settings">
+            </li>
+          </Link>
+          <Link href="/Settings">
+            <li className="p-4 hover:bg-blue-700 cursor-pointer">
               Settings
-            </Link>
           </li>
+          </Link>
         </ul>
       </div>
       {children}
