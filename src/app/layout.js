@@ -13,9 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
     <body className={inter.className}>
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex min-h-svh h-auto bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 h-full bg-blue-950 text-white">
+      <div className="w-64 min-h-svh h-auto bg-blue-950 text-white">
         <div className="p-5">Invoice Manager</div>
         <ul className="mt-12">
           <Link href="/">

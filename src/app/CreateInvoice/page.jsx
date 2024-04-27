@@ -53,7 +53,7 @@ export default function CreateInvoice() {
     };
 
     return (
-        <div className="p-8">
+        <div className="p-8 ">
             <h1 className="text-xl font-semibold mb-4">Create Invoice</h1>
             <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-4">
@@ -66,7 +66,7 @@ export default function CreateInvoice() {
                         name="billTo"
                         value={invoiceData.billTo}
                         onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-fit px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="mb-4">
@@ -79,7 +79,7 @@ export default function CreateInvoice() {
                         name="date"
                         value={invoiceData.date}
                         onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-fit px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="mb-4">
@@ -91,7 +91,7 @@ export default function CreateInvoice() {
                         name="notes"
                         value={invoiceData.notes}
                         onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-96 h-36 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div>
