@@ -45,8 +45,35 @@ export default function CreateInvoice() {
     };
 
     const handlePreview = async () => {
-        // Implement preview functionality
+        try {
+            // Call the API endpoint to generate the PDF
+            const response = await fetch('/api/preview', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(invoiceData)  // Assuming 'invoiceData' is your form data state
+            });
+
+            if (response.ok) {
+                // Convert the response to a Blob
+                const blob = await response.blob();
+                // Create a URL for the Blob
+                const url = window.URL.createObjectURL(blob);
+                // Open a new window or tab with the PDF
+                window.open(url, '_blank');
+            } else {
+                // Handle errors if the server response was not OK
+                console.error('Failed to generate PDF');
+                alert('Failed to generate PDF');
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the fetch operation
+            console.error('Error generating PDF', error);
+            alert('Error generating PDF');
+        }
     };
+
 
     const handleSave = async () => {
         // Implement save functionality
