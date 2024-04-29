@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { v4 as uuidv4 } from 'uuid';
+import * as fs from "fs";
 
 export async function POST(req){
     try {
@@ -23,15 +24,18 @@ export async function POST(req){
 async function InvoiceGen(data) {
     const pdfDoc = await PDFDocument.create();
     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const page = pdfDoc.addPage();
+    const page = pdfDoc.addPage([648, 792]);
     const { width, height } = page.getSize();
 
     // Generate UUID and place it in the top left corner
     const invoiceId = uuidv4();
-    page.drawText(`Invoice ID: ${invoiceId}`, {
-        x: 50,
-        y: height - 50,
-        size: 12,
+    const text = `Invoice ID: ${invoiceId}`
+    const fontSize = 12
+    const textWidth = timesRomanFont.widthOfTextAtSize(text, fontSize)+5;
+    page.drawText(text, {
+        x: width - textWidth,
+        y: height -12,
+        size: fontSize,
         font: timesRomanFont,
         color: rgb(0, 0, 0),
     });
@@ -39,31 +43,33 @@ async function InvoiceGen(data) {
     // Optionally add a logo - assuming you have a URL or a buffer of the logo
     // Here we simulate adding an image; ensure you have the image data as a Uint8Array
     try {
-        const imageUrl = ''; // Replace with path to your image buffer
-        const imageBytes = await fetch(imageUrl).then(res => res.arrayBuffer());
+        // Replace 'public/ax2logo.png' with the correct path to your image file
+        const imageUrl = 'public/ax2logo.png';
+        const imageBytes = fs.readFileSync(imageUrl);
+
+        // Embed the PNG image into the PDF
         const logoImage = await pdfDoc.embedPng(imageBytes);
         page.drawImage(logoImage, {
-            x: width - 150,
-            y: height - 50,
-            width: 100,
-            height: 50
+            x: 10, // Position the image 150 points from the right edge
+            y: height - 180, // Position the image 50 points from the top edge
+            width: 250,     // Set the image width to 100 points
+            height: 250      // Set the image height to 50 points
         });
-    }
-    catch{
-        console.log("NO")
+    } catch (e) {
+        console.error('Error embedding image:', e);
     }
 
     // Bill To information
     page.drawText(`Bill To: ${data.billTo}`, {
         x: 50,
-        y: height - 100,
+        y: height - 130,
         size: 12,
         font: timesRomanFont,
-        color: rgb(0, 0.2, 0.85),
+        color: rgb(0, 0, 0),
     });
 
     // Draw a table for items - this is a basic implementation
-    let yPosition = height - 130;
+    let yPosition = height - 150;
     data.items.forEach((item, index) => {
         const itemY = yPosition - (15 * index);
         page.drawText(`Item: ${item.itemName} - Quantity: ${item.quantity} - Price per item: $${item.pricePer}`, {
