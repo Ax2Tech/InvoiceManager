@@ -44,7 +44,7 @@ async function InvoiceGen(data) {
     // Here we simulate adding an image; ensure you have the image data as a Uint8Array
     try {
         // Replace 'public/ax2logo.png' with the correct path to your image file
-        const imageUrl = 'ublic/ax2logo.png';
+        const imageUrl = 'public/ax2logo.png';
         const imageBytes = fs.readFileSync(imageUrl);
 
         // Embed the PNG image into the PDF
