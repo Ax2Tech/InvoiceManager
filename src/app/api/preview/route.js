@@ -44,7 +44,7 @@ async function InvoiceGen(data) {
     // Here we simulate adding an image; ensure you have the image data as a Uint8Array
     try {
         // Replace 'public/ax2logo.png' with the correct path to your image file
-        const imageUrl = 'public/ax2logo.png';
+        const imageUrl = 'ublic/ax2logo.png';
         const imageBytes = fs.readFileSync(imageUrl);
 
         // Embed the PNG image into the PDF
@@ -56,7 +56,13 @@ async function InvoiceGen(data) {
             height: 250      // Set the image height to 50 points
         });
     } catch (e) {
-        console.error('Error embedding image:', e);
+        page.drawText('Ax2 Technologies', {
+            x: 10, // Position the image 150 points from the right edge
+            y: height - timesRomanFont.heightAtSize(30),
+            size: 30,
+            width: 250,     // Set the image width to 100 points
+            height: 250      // Set the image height to 50 points
+        });
     }
 
     // Bill To information
