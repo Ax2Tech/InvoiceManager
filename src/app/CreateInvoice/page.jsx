@@ -126,6 +126,10 @@ export default function CreateInvoice() {
                     <label className="block text-sm font-medium text-gray-700">
                         Items
                     </label>
+                    <button type="button" onClick={addItem}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-1">
+                        + Add Item
+                    </button>
                     {invoiceData.items.map((item, index) => (
                         <div key={index} className="flex items-center space-x-3 mb-2">
                             <input
@@ -158,10 +162,6 @@ export default function CreateInvoice() {
                             </button>
                         </div>
                     ))}
-                    <button type="button" onClick={addItem}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        + Add Item
-                    </button>
                 </div>
                 <div className="mt-4">
                     <button type="button" onClick={handlePreview}
