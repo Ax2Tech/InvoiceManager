@@ -81,11 +81,11 @@ export default function CreateInvoice() {
     };
 
     return (
-        <div className="p-8">
+        <div className="p-8 text-gray-700 bg-gray-200 w-full">
             <h1 className="text-xl font-semibold mb-4">Create Invoice</h1>
             <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-4">
-                    <label htmlFor="billTo" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="billTo" className="block text-sm font-medium">
                         Bill To
                     </label>
                     <input

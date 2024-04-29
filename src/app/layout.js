@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
     <body className={inter.className}>
-    <div className="flex min-h-svh h-auto bg-gray-100">
+    <div className="flex min-h-svh h-auto">
       {/* Sidebar */}
       <div className="w-64 min-h-svh h-auto bg-blue-950 text-white">
         <div className="p-5">Invoice Manager</div>
