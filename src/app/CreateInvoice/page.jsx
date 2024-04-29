@@ -46,33 +46,34 @@ export default function CreateInvoice() {
 
     const handlePreview = async () => {
         try {
-            // Call the API endpoint to generate the PDF
             const response = await fetch('/api/preview', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(invoiceData)  // Assuming 'invoiceData' is your form data state
+                body: JSON.stringify(invoiceData)
             });
 
             if (response.ok) {
-                // Convert the response to a Blob
                 const blob = await response.blob();
-                // Create a URL for the Blob
                 const url = window.URL.createObjectURL(blob);
-                // Open a new window or tab with the PDF
-                window.open(url, '_blank');
+                // Create or find an element to display the PDF
+                const pdfContainer = document.getElementById('pdfContainer');
+                if (!pdfContainer) {
+                    console.error('PDF container element not found');
+                    return;
+                }
+                pdfContainer.innerHTML = `<iframe src="${url}" width="100%" height="500px" style="border: none;"></iframe>`;
             } else {
-                // Handle errors if the server response was not OK
                 console.error('Failed to generate PDF');
                 alert('Failed to generate PDF');
             }
         } catch (error) {
-            // Handle any errors that occurred during the fetch operation
             console.error('Error generating PDF', error);
             alert('Error generating PDF');
         }
     };
+
 
 
     const handleSave = async () => {
@@ -80,7 +81,7 @@ export default function CreateInvoice() {
     };
 
     return (
-        <div className="p-8 ">
+        <div className="p-8">
             <h1 className="text-xl font-semibold mb-4">Create Invoice</h1>
             <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-4">
@@ -151,24 +152,29 @@ export default function CreateInvoice() {
                                 onChange={e => handleChange(e, index)}
                                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-                            <button type="button" onClick={() => deleteItem(index)} className="text-red-500 hover:text-red-700">
-                                <FaTrash size={20} />
+                            <button type="button" onClick={() => deleteItem(index)}
+                                    className="text-red-500 hover:text-red-700">
+                                <FaTrash size={20}/>
                             </button>
                         </div>
                     ))}
-                    <button type="button" onClick={addItem} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button type="button" onClick={addItem}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         + Add Item
                     </button>
                 </div>
                 <div className="mt-4">
-                    <button type="button" onClick={handlePreview} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                    <button type="button" onClick={handlePreview}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
                         Preview PDF
                     </button>
-                    <button type="button" onClick={handleSave} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    <button type="button" onClick={handleSave}
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                         Save to S3
                     </button>
                 </div>
             </form>
+            <div id="pdfContainer" className="my-2 w-96"></div>
         </div>
     );
 }

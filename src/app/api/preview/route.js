@@ -43,25 +43,24 @@ async function InvoiceGen(data) {
     // Optionally add a logo - assuming you have a URL or a buffer of the logo
     // Here we simulate adding an image; ensure you have the image data as a Uint8Array
     try {
-        // Replace 'public/ax2logo.png' with the correct path to your image file
         const imageUrl = 'public/ax2logo.png';
         const imageBytes = fs.readFileSync(imageUrl);
 
         // Embed the PNG image into the PDF
         const logoImage = await pdfDoc.embedPng(imageBytes);
         page.drawImage(logoImage, {
-            x: 10, // Position the image 150 points from the right edge
-            y: height - 180, // Position the image 50 points from the top edge
-            width: 250,     // Set the image width to 100 points
-            height: 250      // Set the image height to 50 points
+            x: 10,
+            y: height - 180,
+            width: 250,
+            height: 250
         });
     } catch (e) {
         page.drawText('Ax2 Technologies', {
-            x: 10, // Position the image 150 points from the right edge
+            x: 10,
             y: height - timesRomanFont.heightAtSize(30),
             size: 30,
-            width: 250,     // Set the image width to 100 points
-            height: 250      // Set the image height to 50 points
+            width: 250,
+            height: 250
         });
     }
 
