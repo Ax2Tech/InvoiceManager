@@ -77,7 +77,26 @@ export default function CreateInvoice() {
 
 
     const handleSave = async () => {
-        // Implement save functionality
+        try {
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(invoiceData)
+            });
+
+            if (response.ok) {
+                console.log("Invoice Saved Successfully")
+                alert("Successfully Saved to S3");
+            } else {
+                console.error('Failed to save Invoice');
+                alert('Failed to generate PDF');
+            }
+        } catch (error) {
+            console.error('Error generating PDF', error);
+            alert('Error generating PDF');
+        }
     };
 
     return (
