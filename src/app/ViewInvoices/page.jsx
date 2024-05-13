@@ -10,6 +10,7 @@ AWS.config.update({
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 async function getData() {
+    console.log("Revalid")
     const params = {
         TableName: 'Invoice', // Replace 'Invoices' with your actual table name
     };
@@ -22,18 +23,6 @@ async function getData() {
         throw err;
     }
 }
-
-// async function getData() {
-//     const res = await fetch(`/api/getInvoices`)
-//
-//
-//     if (!res.ok) {
-//         // This will activate the closest `error.js` Error Boundary
-//         throw new Error('Failed to fetch data')
-//     }
-//
-//     return await res.json();
-// }
 export default async function ViewInvoices() {
     const data = await getData()
     const sortedItems = data.sort((a, b) => b.TimeStamp - a.TimeStamp);
