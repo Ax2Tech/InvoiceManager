@@ -1,6 +1,7 @@
 import {PDFDocument, rgb, StandardFonts} from "pdf-lib";
 import {v4 as uuidv4} from "uuid";
 import AWS from 'aws-sdk';
+import {revalidatePath} from "next/cache";
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -23,6 +24,7 @@ export async function POST(req){
            TimeStamp: Math.floor(new Date().getTime() / 1000)
        }
        const putDB = addItemToDynamoDBTable(item)
+       revalidatePath('/ViewInvoices', 'page')
        return new Response(null, {
            status: 200,  // HTTP status code
            statusText: 'Success'
