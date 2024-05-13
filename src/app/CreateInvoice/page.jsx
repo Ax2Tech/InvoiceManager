@@ -7,12 +7,13 @@ export default function CreateInvoice() {
         billTo: '',
         date: '',
         notes: '',
-        items: [{ itemName: '', quantity: '', pricePer: '' }]
+        items: [{ itemName: '', quantity: '', pricePer: '' }],
+        title:''
     });
 
     const handleChange = (event, index) => {
         const { name, value } = event.target;
-        if (name === "billTo" || name === "date" || name === "notes") {
+        if (name === "billTo" || name === "date" || name === "notes" || name === "title") {
             setInvoiceData(prev => ({
                 ...prev,
                 [name]: value
@@ -77,13 +78,45 @@ export default function CreateInvoice() {
 
 
     const handleSave = async () => {
-        // Implement save functionality
+        try {
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(invoiceData)
+            });
+
+            if (response.ok) {
+                console.log("Invoice Saved Successfully")
+                alert("Successfully Saved to S3");
+            } else {
+                console.error('Failed to save Invoice');
+                alert('Failed to generate PDF');
+            }
+        } catch (error) {
+            console.error('Error generating PDF', error);
+            alert('Error generating PDF');
+        }
     };
 
     return (
         <div className="p-8 text-gray-700 bg-gray-200">
             <h1 className="text-xl font-semibold mb-4">Create Invoice</h1>
             <form onSubmit={(e) => e.preventDefault()}>
+                <div className="mb-4">
+                    <label htmlFor="title" className="block text-sm font-medium">
+                        Invoice Name
+                    </label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={invoiceData.title}
+                        onChange={handleChange}
+                        className="mt-1 block w-fit px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="billTo" className="block text-sm font-medium">
                         Bill To

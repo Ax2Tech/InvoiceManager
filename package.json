@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "aws-sdk": "^2.1613.0",
     "next": "14.2.3",
     "pdf-lib": "^1.17.1",
     "react": "^18",
