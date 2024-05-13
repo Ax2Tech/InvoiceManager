@@ -13,9 +13,16 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
 export async function POST(req){
    try{
+       const data = await req.json()
        const uuid =  await uuidv4();
-       const invoiceFile = await InvoiceGen(await req.json(), uuid);
+       const invoiceFile = await InvoiceGen(data, uuid);
        const prom = await uploadPdfToS3(invoiceFile, uuid)
+       const item = {
+           InvoiceId: uuid,
+           InvoiceName: data.title,
+           TimeStamp: Math.floor(new Date().getTime() / 1000)
+       }
+       const putDB = addItemToDynamoDBTable(item)
        return new Response(null, {
            status: 200,  // HTTP status code
            statusText: 'Success'
@@ -40,9 +47,10 @@ async function addItemToDynamoDBTable(item) {
 
     try {
         await dynamoDB.put(params).promise();
-        console.log('Item added successfully:', item);
+        return 0
     } catch (error) {
         console.error('Error adding item to DynamoDB:', error);
+        throw error;
     }
 }
 
@@ -55,14 +63,12 @@ async function uploadPdfToS3(fileContent, key) {
         Bucket: bucketName,
         Key: key,
         Body: fileContent,
-        ContentType: 'application/pdf',
+        ContentType: 'application/pdf'
     };
 
     try {
         // Upload file using the s3.upload method
-        const data = await s3.upload(params).promise();
-        console.log(`PDF uploaded successfully at ${data.Location}`);
-        return data;
+        return await s3.upload(params).promise();
     } catch (error) {
         console.error('Error uploading PDF:', error);
         throw error;
