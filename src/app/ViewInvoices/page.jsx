@@ -1,19 +1,42 @@
 import {MdOutlineReceipt} from "react-icons/md";
+import AWS from 'aws-sdk';
 
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+});
+
+
+const dynamoDB = new AWS.DynamoDB.DocumentClient();
 async function getData() {
-    const res = await fetch('/api/getInvoices')
+    const params = {
+        TableName: 'Invoice', // Replace 'Invoices' with your actual table name
+    };
 
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
+    try {
+        const data = await dynamoDB.scan(params).promise();
+        return data.Items;
+    } catch (err) {
+        console.error("Error scanning database:", err);
+        throw err;
     }
-
-    return await res.json();
 }
+
+// async function getData() {
+//     const res = await fetch(`/api/getInvoices`)
+//
+//
+//     if (!res.ok) {
+//         // This will activate the closest `error.js` Error Boundary
+//         throw new Error('Failed to fetch data')
+//     }
+//
+//     return await res.json();
+// }
 export default async function ViewInvoices() {
     const data = await getData()
-    const sortedItems = data.invoices.sort((a, b) => b.TimeStamp - a.TimeStamp);
+    const sortedItems = data.sort((a, b) => b.TimeStamp - a.TimeStamp);
 
     return (
         <div className="p-8">
