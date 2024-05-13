@@ -23,7 +23,7 @@ export async function POST(req){
            InvoiceName: data.title,
            TimeStamp: Math.floor(new Date().getTime() / 1000)
        }
-       const putDB = addItemToDynamoDBTable(item)
+       const putDB = await addItemToDynamoDBTable(item)
        revalidatePath('/ViewInvoices', 'page')
        return new Response(null, {
            status: 200,  // HTTP status code
