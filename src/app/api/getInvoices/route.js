@@ -40,7 +40,6 @@ async function scanAllRecords() {
 
     try {
         const data = await dynamoDB.scan(params).promise();
-        console.log("Scanned Data:", data.Items);
         return data.Items;
     } catch (err) {
         console.error("Error scanning database:", err);
