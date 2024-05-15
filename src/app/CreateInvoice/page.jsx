@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import {router} from "next/client";
 
 export default function CreateInvoice() {
     const [invoiceData, setInvoiceData] = useState({
@@ -90,6 +91,7 @@ export default function CreateInvoice() {
             if (response.ok) {
                 console.log("Invoice Saved Successfully")
                 alert("Successfully Saved to S3");
+                window.location.href = '/ViewInvoices';
             } else {
                 console.error('Failed to save Invoice');
                 alert('Failed to generate PDF');
