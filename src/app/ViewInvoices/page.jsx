@@ -6,7 +6,11 @@ async function getData() {
         const res = await fetch('https://invoices.ax2tech.com/api/getInvoices')
         if (!res.ok) {
             console.log('Failed to fetch')
-            return []
+            return [{
+                InvoiceName: 'Fetch Failed',
+                TimeStamp: 1715797348,
+                InvoiceId: 'Sample'
+            }]
         }
         else{
             return res.json()

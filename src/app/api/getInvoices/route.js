@@ -17,7 +17,6 @@ export async function GET(req){
 
     try {
         const data = await dynamoDB.scan(params).promise();
-        await console.log(data.Items)
         return new Response(JSON.stringify(data.Items), {
             status: 200,
             statusText: 'Success'
