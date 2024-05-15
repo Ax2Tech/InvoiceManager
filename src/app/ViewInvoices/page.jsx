@@ -1,32 +1,20 @@
 import {MdOutlineReceipt} from "react-icons/md";
-import AWS from 'aws-sdk';
-import { cache } from 'react'
-
-AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
-});
 
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
-export const dynamic = 'force-dynamic'
-export const getData = cache(async () => {
-    const params = {
-        TableName: 'Invoice', // Replace 'Invoices' with your actual table name
-    };
+async function getData() {
+    try{
+        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices', { next: { revalidate: 10 } })
+        return res.json()
 
-    try {
-        const data = await dynamoDB.scan(params).promise();
-        return data.Items;
-    } catch (err) {
-        console.error("Error scanning database:", err);
-        throw err;
     }
-})
+    catch (err){
+        console.log(err)
+    }
+}
+
 export default async function ViewInvoices() {
     const data = await getData()
-    const sortedItems = data.sort((a, b) => b.TimeStamp - a.TimeStamp);
+    const sortedItems = await data.sort((a, b) => b.TimeStamp - a.TimeStamp);
 
     return (
         <div className="p-8">
