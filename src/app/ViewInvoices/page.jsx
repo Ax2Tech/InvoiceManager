@@ -3,7 +3,7 @@ import {MdOutlineReceipt} from "react-icons/md";
 
 async function getData() {
     try{
-        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices')
+        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices', { next: { tags: ['invoices'] } })
         if (!res.ok) {
             console.log('Failed to fetch')
             return [{
