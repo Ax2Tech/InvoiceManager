@@ -5,8 +5,8 @@ async function getData() {
     try{
         const res = await fetch('https://invoices.ax2tech.com/api/getInvoices')
         if (!res.ok) {
-            // This will activate the closest `error.js` Error Boundary
-            console.log('oooo')
+            console.log('Failed to fetch')
+            return []
         }
         else{
             return res.json()
