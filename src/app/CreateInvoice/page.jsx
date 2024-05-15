@@ -91,7 +91,7 @@ export default function CreateInvoice() {
             if (response.ok) {
                 console.log("Invoice Saved Successfully")
                 alert("Successfully Saved to S3");
-                window.location.href = '/ViewInvoices';
+                await router.replace('/ViewInvoices');
             } else {
                 console.error('Failed to save Invoice');
                 alert('Failed to generate PDF');
