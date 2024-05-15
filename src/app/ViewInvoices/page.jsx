@@ -1,5 +1,6 @@
 import {MdOutlineReceipt} from "react-icons/md";
 import AWS from 'aws-sdk';
+import { cache } from 'react'
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -9,8 +10,8 @@ AWS.config.update({
 
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
-async function getData() {
-    console.log("Revalid")
+
+export const getData = cache(async (id) => {
     const params = {
         TableName: 'Invoice', // Replace 'Invoices' with your actual table name
     };
@@ -22,7 +23,7 @@ async function getData() {
         console.error("Error scanning database:", err);
         throw err;
     }
-}
+})
 export default async function ViewInvoices() {
     const data = await getData()
     const sortedItems = data.sort((a, b) => b.TimeStamp - a.TimeStamp);
