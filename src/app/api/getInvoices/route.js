@@ -9,6 +9,7 @@ AWS.config.update({
 
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
+export const dynamic = 'force-dynamic'
 
 export async function GET(req){
     const params = {
