@@ -3,9 +3,14 @@ import {MdOutlineReceipt} from "react-icons/md";
 
 async function getData() {
     try{
-        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices', { next: { revalidate: 10 } })
-        return res.json()
-
+        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices')
+        if (!res.ok) {
+            // This will activate the closest `error.js` Error Boundary
+            console.log('oooo')
+        }
+        else{
+            return res.json()
+        }
     }
     catch (err){
         console.log(err)
