@@ -10,8 +10,8 @@ AWS.config.update({
 
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
-
-export const getData = cache(async (id) => {
+export const dynamic = 'force-dynamic'
+export const getData = cache(async () => {
     const params = {
         TableName: 'Invoice', // Replace 'Invoices' with your actual table name
     };
