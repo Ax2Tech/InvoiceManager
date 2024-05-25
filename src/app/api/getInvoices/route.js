@@ -7,6 +7,8 @@ AWS.config.update({
     region: process.env.AWS_REGION
 });
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = 'force-dynamic'
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
