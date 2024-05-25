@@ -1,9 +1,8 @@
 import {MdOutlineReceipt} from "react-icons/md";
 
-export const dynamic = 'force-dynamic'
 async function getData() {
     try{
-        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices',{ cache: 'no-store' })
+        const res = await fetch('https://invoices.ax2tech.com/api/getInvoices')
         if (!res.ok) {
             console.log('Failed to fetch')
             return [{
